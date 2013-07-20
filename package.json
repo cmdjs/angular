@@ -1,0 +1,16 @@
+{
+  "name": "angular-family",
+  "version": "1.0.0",
+  "description": "angular and its family members",
+  "dependencies": {
+    "seajs": "*",
+    "mocha": "*",
+    "expect.js": "*",
+    "request": "*",
+    "async": "*",
+    "grunt": "*"
+  },
+  "scripts": {
+    "test":  "mocha-phantomjs index.html"
+  }
+}
