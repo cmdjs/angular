@@ -4,7 +4,16 @@ module.exports = function(grunt) {
   function repl(code, filename) {
     var id = pkg.family + '/' + pkg.name + '/' + pkg.version + '/' + filename;
     var reg = /(\}\)\(window,\s*document\);)/
-    code = code.replace(reg, ';if(typeof define === "function"){define("' + id + '",[],function(){return angular;})};$1')
+    code = code.replace(reg, ';define("' + id + '",[],function(){return angular;});$1')
+    return code;
+  }
+
+  function replModule(code, filename) {
+    var id = pkg.family + '/' + pkg.name + '/' + pkg.version + '/' + filename;
+    var regHead = /(\(function\([a-zA-Z]+,\s*[a-zA-Z]+,\s*[a-zA-Z]+\)\s*\{)/
+    var regFoot = /\}\)\(window,\s*window\.angular\);/
+    code = code.replace(regHead, 'define("' + id + '",["angularjs"],function(require){ var angular = require("angularjs");$1')
+    code = code.replace(regFoot, '})(window,angular);})')
     return code;
   }
 
@@ -15,7 +24,7 @@ module.exports = function(grunt) {
       options: {
         dest: 'dist',
       },
-      src: {
+      'ng-src': {
         options: {
           transform: function(code) {
             return repl(code, 'angular-debug');
@@ -24,7 +33,7 @@ module.exports = function(grunt) {
         url: 'http://code.angularjs.org/<%= pkg.version %>/angular.js',
         name: 'angular-debug.js'
       },
-      min: {
+      'ng-min': {
         options: {
           transform: function(code) {
             return repl(code, 'angular');
@@ -32,6 +41,43 @@ module.exports = function(grunt) {
         },
         url: 'http://code.angularjs.org/<%= pkg.version %>/angular.min.js',
         name: 'angular.js'
+      },
+      'ng-resource-src': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-resource-debug');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-resource.js',
+        name: 'angular-resource-debug.js'
+
+      },
+      'ng-resource-min': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-resource');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-resource.min.js',
+        name: 'angular-resource.js'
+      },
+      'ng-cookies-src': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-cookies-debug');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-cookies.js',
+        name: 'angular-cookies-debug.js'
+      },
+      'ng-cookies-min': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-cookies');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-cookies.min.js',
+        name: 'angular-cookies.js'
       }
     }
   });
