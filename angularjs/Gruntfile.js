@@ -8,12 +8,12 @@ module.exports = function(grunt) {
     return code;
   }
 
-  function replModule(code, filename) {
+  function replModule(code, filename, moduleName) {
     var id = pkg.family + '/' + pkg.name + '/' + pkg.version + '/' + filename;
     var regHead = /(\(function\([a-zA-Z]+,\s*[a-zA-Z]+,\s*[a-zA-Z]+\)\s*\{)/
     var regFoot = /\}\)\(window,\s*window\.angular\);/
     code = code.replace(regHead, 'define("' + id + '",["angularjs"],function(require){ var angular = require("angularjs");$1')
-    code = code.replace(regFoot, '})(window,angular);})')
+    code = code.replace(regFoot, '})(window,angular);return angular.module("'+moduleName+'");})')
     return code;
   }
 
@@ -45,7 +45,7 @@ module.exports = function(grunt) {
       'ng-resource-src': {
         options: {
           transform: function(code) {
-            return replModule(code, 'angular-resource-debug');
+            return replModule(code, 'angular-resource-debug', 'ngResource');
           }
         },
         url: 'http://code.angularjs.org/<%= pkg.version %>/angular-resource.js',
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
       'ng-resource-min': {
         options: {
           transform: function(code) {
-            return replModule(code, 'angular-resource');
+            return replModule(code, 'angular-resource', 'ngResource');
           }
         },
         url: 'http://code.angularjs.org/<%= pkg.version %>/angular-resource.min.js',
@@ -64,7 +64,7 @@ module.exports = function(grunt) {
       'ng-cookies-src': {
         options: {
           transform: function(code) {
-            return replModule(code, 'angular-cookies-debug');
+            return replModule(code, 'angular-cookies-debug', 'ngCookies');
           }
         },
         url: 'http://code.angularjs.org/<%= pkg.version %>/angular-cookies.js',
@@ -73,7 +73,7 @@ module.exports = function(grunt) {
       'ng-cookies-min': {
         options: {
           transform: function(code) {
-            return replModule(code, 'angular-cookies');
+            return replModule(code, 'angular-cookies', 'ngCookies');
           }
         },
         url: 'http://code.angularjs.org/<%= pkg.version %>/angular-cookies.min.js',
