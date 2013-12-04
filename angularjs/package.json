@@ -2,7 +2,7 @@
   "name": "angularjs",
   "family": "angular",
   "description": "HTML enhanced for web apps!",
-  "version": "1.1.5",
+  "version": "1.2.3",
   "package": "https://raw.github.com/angular/angularjs/master/package.json",
   "homepage": "http://angularjs.org",
   "repository": {
