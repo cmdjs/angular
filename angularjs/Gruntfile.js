@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 
     download: {
       options: {
-        dest: 'dist',
+        dest: 'dist'
       },
       'ng-src': {
         options: {
@@ -78,6 +78,87 @@ module.exports = function(grunt) {
         },
         url: 'http://code.angularjs.org/<%= pkg.version %>/angular-cookies.min.js',
         name: 'angular-cookies.js'
+      },
+      'ng-route-src': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-route-debug', 'ngRoute');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-route.js',
+        name: 'angular-route-debug.js'
+      },
+      'ng-route-min': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-route', 'ngRoute');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-route.min.js',
+        name: 'angular-route.js'
+      },
+      'ng-animate-src': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-animate-debug', 'ngAnimate');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-animate.js',
+        name: 'angular-animate-debug.js'
+      },
+      'ng-animate-min': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-animate', 'ngAnimate');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-animate.min.js',
+        name: 'angular-animate.js'
+      },
+      'ng-touch-src': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-touch-debug', 'ngTouch');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-touch.js',
+        name: 'angular-touch-debug.js'
+      },
+      'ng-touch-min': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-touch', 'ngTouch');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-touch.min.js',
+        name: 'angular-touch.js'
+      },
+      'ng-sanitize-src': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-sanitize-debug', 'ngSanitize');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-sanitize.js',
+        name: 'angular-sanitize-debug.js'
+      },
+      'ng-sanitize-min': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-sanitize', 'ngSanitize');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-sanitize.min.js',
+        name: 'angular-sanitize.js'
+      },
+      'ng-mock-src': {
+        options: {
+          transform: function(code) {
+            return replModule(code, 'angular-mock', 'ngMock');
+          }
+        },
+        url: 'http://code.angularjs.org/<%= pkg.version %>/angular-mocks.js',
+        name: 'angular-mock.js'
       }
     }
   });
